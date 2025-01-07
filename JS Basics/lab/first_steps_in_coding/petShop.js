@@ -1,14 +1,11 @@
-function calculateExpenses(input){
+function calculateExpenses(dogFoodCount, catFoodCount){
     catFoodUnitPrice = 4
-    dogFoodUnitPrice = 2,5
-    
-    let catFoodCount = Number(input[0])
-    let dogFoodCount = Number(input[1])
+    dogFoodUnitPrice = 2.5
 
-    let total = (catFoodUnitPrice * catFoodCount) + (dog * dogFoodCount)
+    let total = (catFoodUnitPrice * catFoodCount) + (dogFoodUnitPrice * dogFoodCount)
 
     console.log(`${total} lv.`)
 
 }
 
-calculateExpenses(5, 4)
+calculateExpenses(5, 4);
