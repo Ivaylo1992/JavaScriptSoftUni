@@ -8,6 +8,16 @@ function repainting(nylonSquareMeters, paintLiters, thinnerLiters, hoursForRepai
     let moneyForBags = 0.40;
 
     let totalPaintPrice = (extraPaint + paintLiters) * paintPrice;
-    let totalNylonPrice = (extraNylon + nylonSquareMeters);
+    let totalNylonPrice = (extraNylon + nylonSquareMeters) * nylonPrice;
+    let totalThinnerPrice =  thinnerLiters * thinnerPrice
+    let totalMaterialsPrice = totalNylonPrice + totalPaintPrice + totalThinnerPrice + moneyForBags;
+
+    let paintersJobPrice = (totalMaterialsPrice * 0.3) * hoursForRepainting;
+
+    let totalCost = paintersJobPrice + totalMaterialsPrice;
+
+    console.log(totalCost)
 
 }
+
+repainting(5, 10, 10, 1);
