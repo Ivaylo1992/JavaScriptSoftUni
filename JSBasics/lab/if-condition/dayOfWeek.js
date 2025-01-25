@@ -11,5 +11,4 @@ function dayOfWeek(number){
     }
 }
 
-
 dayOfWeek(4);
