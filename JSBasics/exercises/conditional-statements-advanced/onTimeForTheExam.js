@@ -1,0 +1,5 @@
+function onTimeForTheExam(){
+    
+}
+
+onTimeForTheExam();
