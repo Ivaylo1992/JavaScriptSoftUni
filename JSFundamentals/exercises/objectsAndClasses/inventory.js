@@ -7,12 +7,27 @@ function inventory (input) {
         }
 
         info () {
-            console.log(`Hero: ${this.name}\nlevel => ${this.level}Items => ${this.items.join(', ')}`);  
+            console.log(`Hero: ${this.name}\nlevel => ${this.level}\nitems => ${this.items.join(', ')}`);  
         }
     }
 
-    for (info of input) {
+    let heroes = [];
 
+    for (info of input) {
+        let tokens = info.split(' / ')
+        let heroName = tokens.shift();
+        let heroLevel = Number(tokens.shift());
+        let heroInventory = tokens.shift().split(', ');
+
+        let hero = new Hero(heroName, heroLevel, heroInventory);
+
+        heroes.push(hero);
+    }
+
+    heroes = heroes.sort((a, b) => a.level - b.level)
+
+    for (let hero of heroes) {
+        hero.info();
     }
 }
 
