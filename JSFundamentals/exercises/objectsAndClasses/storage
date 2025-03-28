@@ -1,0 +1,18 @@
+class Storage {
+    constructor (capacity) {
+        this.capacity = capacity;
+        this.storage = [];
+        this.totalCost = this.storage.reduce((sum, product) => sum + product.price, 0);
+    }
+
+    addProduct (newProduct) {
+        if (this.capacity <= newProduct.quantity) {
+            let foundProduct = this.storage.find(product => product.name = newProduct.name);
+
+            if (!foundProduct) {
+                this.storage.push(newProduct);
+                this.capacity -= newProduct.quantity
+            }
+        }
+    }
+}
