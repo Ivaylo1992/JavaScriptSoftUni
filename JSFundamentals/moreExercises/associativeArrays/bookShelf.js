@@ -7,27 +7,68 @@ function manageLibrary (input) {
             libraryObj = addShelf(shelfId, shelfGenre, libraryObj);
         } else {
             let [bookTitle, bookInfo] = command.split(': ')
-            let titleStr = bookTitle.shift();
             let [bookAuthor, bookGenre] = bookInfo.split(', ');
+
+            libraryObj = addBook(bookAuthor, bookTitle, bookGenre, libraryObj);
         }
     }
-    console.log(libraryObj);
-    
+
+    printLibrary(libraryObj);
 
     function addShelf (id, genre, library) {
         if (!library[id]) {
-            library[id] = {};
-            library[id].genre = genre;
-            library[id].books = [];
-            library[id].booksCount = 0;
+            library[id] = {
+                genre: genre,
+                books: [],
+            };
         }
 
         return library;
     }
 
-    function addBook (author, genre, library) {
-        for (let shelf of Object.keys.library()){
+    function addBook (author, title, genre, library) {
+        for (let shelfId of Object.keys(library)){
+            if (library[shelfId]['genre'] === genre) {
+                let bookObj = {
+                    title,
+                    author
+                };
+                
+                library[shelfId]['books'].push(bookObj);
+                break;
+            }
+        }
+        
+        return library;
+    }
+
+    function sortLibrary (library) {
+        let sortedLibrary = Object.entries(library).sort(
+            (a, b) => b[1]['books'].length - a[1]['books'].length
+        );
+
+        return sortedLibrary;
+    }
+
+    function sortBooks (shelf) {
+        let sortedBooks = shelf.sort((a, b) => a.title.localeCompare(b.title));
+        return sortedBooks;
+    }
+
+    function printLibrary(library) {
+        let sortedShelves = sortLibrary(library);
+        for (let shelf of sortedShelves) {
+            let shelfId = shelf.shift();
+            let shelfObj = shelf.shift();
+
+            console.log(`${shelfId} ${shelfObj.genre}: ${shelfObj.books.length}`);
             
+            let sortedBooks = sortBooks(shelfObj.books);
+
+            for (let book of sortedBooks) {
+                console.log(`--> ${book.title}: ${book.author}`);
+            }
+
         }
     }
 }
