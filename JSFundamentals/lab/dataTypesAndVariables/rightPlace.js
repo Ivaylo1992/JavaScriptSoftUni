@@ -6,4 +6,5 @@ function rightPlace(strng, char, result) {
     console.log(message);
   }
 
-rightPlace()
+  console.log('Hello');
+  

@@ -17,3 +17,5 @@ function shopping(budget, videoCardCount, processorCount, ramCount){
         console.log(`Not enough money! You need ${diff.toFixed(2)} leva more!`);
     }
 }
+
+
