@@ -1,11 +1,12 @@
 function matchFullName (names) {
     let result = [];
-    let path = /\b[A-Z][a-z]+ [A-Z][a-z]+\b/g
+    let pattern = /\b[A-Z][a-z]+ [A-Z][a-z]+\b/g
     
-    for (let name of names.split(', ')) {
-        if (path.test(name)) {
-            result.push(name)
-        }
+    let validName = pattern.exec(names)
+
+    while (validName != null) {
+        result.push(validName[0]);
+        validName = pattern.exec(names)
     }
 
     console.log(result.join(' '));
