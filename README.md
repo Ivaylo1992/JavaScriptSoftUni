@@ -1,55 +1,38 @@
-JavaScriptSoftUni
-This repository contains solutions to the JavaScript courses offered by the Software University (SoftUni). It spans from fundamental programming concepts to advanced JavaScript applications, reflecting the comprehensive curriculum provided by SoftUni.
+# JavaScriptSoftUni
 
-📚 Course Overview
-The repository is organized into the following modules:​
+This repository contains solutions to the JavaScript courses offered by the Software University (SoftUni).  
+It spans from fundamental programming concepts to advanced JavaScript applications, reflecting the comprehensive curriculum provided by SoftUni.
 
-JS Fundamentals: Covers basic programming concepts, including variables, data types, control structures, and functions.​
+---
 
-JS Advanced: Delves into more complex topics such as advanced functions, error handling, and object-oriented programming.​
+## 📚 Course Overview
 
-JS Applications: Focuses on building real-world applications, emphasizing asynchronous programming, RESTful services, and client-server architecture.
+The repository is organized into the following modules:
 
-🛠️ Technologies Used
-JavaScript (ES6+)​
+- **JS Fundamentals**: Covers basic programming concepts, including variables, data types, control structures, and functions.
 
-Node.js​
+- **JS Advanced**: Delves into more complex topics such as advanced functions, error handling, and object-oriented programming.
 
-Express.js​
-SoftUni
+- **JS Applications**: Focuses on building real-world applications, emphasizing asynchronous programming, RESTful services, and client-server architecture.
 
-MongoDB​
+---
 
-HTML/CSS​
+## 🛠️ Technologies Used
 
-Git & GitHub for version control
+- JavaScript (ES6+)
+- Node.js
+- Express.js
+- MongoDB
+- HTML/CSS
+- Git & GitHub for version control
 
-🚀 Getting Started
+---
+
+## 🚀 Getting Started
+
 To run the projects locally:
 
-Clone the repository:​
-GitHub
-+3
-GitHub
-+3
-judge.softuni.org
-+3
+1. Clone the repository:
 
-bash
-Copy
-Edit
-git clone https://github.com/Ivaylo1992/JavaScriptSoftUni.git
-Navigate to the desired project folder.​
-
-Install the necessary dependencies:​
-
-bash
-Copy
-Edit
-npm install
-Start the application:​
-
-bash
-Copy
-Edit
-
+   ```bash
+   git clone https://github.com/Ivaylo1992/JavaScriptSoftUni.git
