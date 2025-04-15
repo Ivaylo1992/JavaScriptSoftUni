@@ -1,10 +1,10 @@
 function findSum (start, end) {
     const startIdx = Number(start);
-    const endtIdx = Number(end);
+    const endIdx = Number(end);
 
     let sum = 0;
 
-    for (let i = startIdx; i <= endtIdx; i++) {
+    for (let i = startIdx; i <= endIdx; i++) {
         sum += i
     }
 
