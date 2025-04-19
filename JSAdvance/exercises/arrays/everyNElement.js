@@ -1,9 +1,9 @@
-function sortArray (array, increment) {
-    const result = [];
+function sortArray(array, increment) {
+  const result = [];
 
-    for (let i = 0; i < array.length; i += increment) {
-        result.push(array[i]);
-    }
+  for (let i = 0; i < array.length; i += increment) {
+    result.push(array[i]);
+  }
 
-    return result;
+  return result;
 }
