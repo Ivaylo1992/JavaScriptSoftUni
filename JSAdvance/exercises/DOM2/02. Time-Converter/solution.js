@@ -18,10 +18,10 @@ function attachEventsListeners() {
     document.getElementById('minutesBtn').addEventListener('click', () => convert('minutes'));
     document.getElementById('secondsBtn').addEventListener('click', () => convert('seconds'));
 
+    
     function convert(unit) {
         const value = Number(inputElements[unit].value);
         const days = value / ratios[unit]; // normalize to days
-
         for (const key in inputElements) {
             inputElements[key].value = days * ratios[key];
         }
