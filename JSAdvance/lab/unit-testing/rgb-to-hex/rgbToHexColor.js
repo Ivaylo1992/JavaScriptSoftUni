@@ -16,3 +16,5 @@ export function rgbToHexColor(red, green, blue) {
         ("0" + green.toString(16).toUpperCase()).slice(-2) + 
         ("0" + blue.toString(16).toUpperCase()).slice(-2); 
 } 
+
+console.log(rgbToHexColor(255, 255, 255));
