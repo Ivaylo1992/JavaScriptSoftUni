@@ -1,4 +1,4 @@
-const planYourTrip = {
+export const planYourTrip = {
   choosingDestination(destination, season, year) {
     if (year != 2024) {
       throw new Error(`Invalid Year!`);
@@ -52,4 +52,4 @@ const planYourTrip = {
   },
 };
 
-module.exports = planYourTrip;
+
