@@ -10,5 +10,3 @@ function findBiggestElement (input) {
 
     return biggestElement;
 }
-
-console.log(findBiggestElement([[20, 50, 10], [8, 33, 145]]));
