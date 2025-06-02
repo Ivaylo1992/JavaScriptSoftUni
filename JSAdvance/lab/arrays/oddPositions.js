@@ -1,12 +1,11 @@
 function processArray (input) {
     const result = [];
 
-    for (index in input) {
+    for (let index in input) {
         if (index % 2 !== 0) {
             result.unshift(input[index] * 2)
         }
     }
-
     return result
 }
 
