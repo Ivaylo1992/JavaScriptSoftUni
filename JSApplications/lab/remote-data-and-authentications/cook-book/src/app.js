@@ -48,7 +48,6 @@ function createRecipeCard(recipe) {
 
 window.addEventListener('load', async () => {
     const main = document.querySelector('main');
-
     const recipes = await getRecipes();
     const cards = recipes.map(createRecipePreview);
 

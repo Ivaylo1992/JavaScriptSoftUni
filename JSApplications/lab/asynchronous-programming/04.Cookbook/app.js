@@ -1,114 +1,84 @@
-function solve() {
-  const loadingEl = document.querySelectorAll("p")[0];
-  const mainBlock = document.querySelector("main");
 
-  fetch("http://localhost:3030/jsonstore/cookbook/recipes")
-    .then((res) => {
-      return res.json();
-    })
-    .then((data) => {
-      loadingEl.parentElement.removeChild(loadingEl);
-      Object.entries(data).forEach((recipe) => {
-        // Create preview article for the current recipe
-        const recipeId = recipe[1]._id;
+async function getRecipes() {
+    const response = await fetch('http://localhost:3030/jsonstore/cookbook/recipes');
+    const recipes = await response.json();
 
-        const previewArticle = document.createElement("article");
-        previewArticle.classList.add("preview");
+    return Object.values(recipes);
+}
 
-        // The div for the title
-        const titleDiv = document.createElement("div");
-        titleDiv.classList.add("title");
+async function getRecipeById(id) {
+    const response = await fetch('http://localhost:3030/jsonstore/cookbook/details/' + id);
+    const recipe = await response.json();
 
-        // Title
-        const h2 = document.createElement("h2");
-        h2.textContent = "Title";
+    return recipe;
+}
 
-        //The div for the preview img
-        const imgDiv = document.createElement("div");
-        imgDiv.classList.add("small");
+function createRecipePreview(recipe) {
+    const result = e('article', { className: 'preview', onClick: toggleCard },
+        e('div', { className: 'title' }, e('h2', {}, recipe.name)),
+        e('div', { className: 'small' }, e('img', { src: recipe.img })),
+    );
 
-        // Get the image from database
-        const imgEl = document.createElement("img");
-        const imgPath = `./${recipe[1].img}`;
-        imgEl.src = imgPath;
+    return result;
 
-        // Assemble the preview article
-        imgDiv.appendChild(imgEl);
+    async function toggleCard() {
+        const fullRecipe = await getRecipeById(recipe._id);
 
-        titleDiv.appendChild(h2);
+        result.replaceWith(createRecipeCard(fullRecipe));
+    }
+}
 
-        previewArticle.appendChild(titleDiv);
-        previewArticle.appendChild(imgDiv);
+function createRecipeCard(recipe) {
+  debugger
+    const result = e('article', {},
+        e('h2', {}, recipe.name),
+        e('div', { className: 'band' },
+            e('div', { className: 'thumb' }, e('img', { src: recipe.img })),
+            e('div', { className: 'ingredients' },
+                e('h3', {}, 'Ingredients:'),
+                e('ul', {}, recipe.ingredients.map(i => e('li', {}, i))),
+            )
+        ),
+        e('div', { className: 'description' },
+            e('h3', {}, 'Preparation:'),
+            recipe.steps.map(s => e('p', {}, s))
+        ),
+    );
 
-        previewArticle.addEventListener("click", (e) => {
-          fetch(`http://localhost:3030/jsonstore/cookbook/details/${recipeId}`)
-            .then((res) => res.json())
-            .then((info) => {
-              mainBlock.innerHTML = '';
-              
-              // Create the main article
-              const mainArticle = document.createElement("article");
-              const mainArtH2 = document.createElement("h2");
-              mainArtH2.textContent = "Title";
+    return result;
+}
 
-              const bandDiv = document.createElement("div");
-              bandDiv.classList.add("band");
+window.addEventListener('load', async () => {
+    const main = document.querySelector('main');
 
-              const thumbDiv = document.createElement("div");
-              thumbDiv.classList.add("thumb");
+    const recipes = await getRecipes();
+    const cards = recipes.map(createRecipePreview);
 
-              const mainArtImgEl = document.createElement("img");
-              const mainArtImgPath = `./${info.img}`;
-              mainArtImgEl.src = mainArtImgPath;
+    main.innerHTML = '';
+    cards.forEach(c => main.appendChild(c));
+});
 
-              thumbDiv.appendChild(mainArtImgEl);
-              bandDiv.appendChild(thumbDiv);
+function e(type, attributes, ...content) {
+    const result = document.createElement(type);
 
-              const ingredientsDiv = document.createElement("div");
-              ingredientsDiv.classList.add("ingredients");
+    for (let [attr, value] of Object.entries(attributes || {})) {
+        if (attr.substring(0, 2) == 'on') {
+            result.addEventListener(attr.substring(2).toLocaleLowerCase(), value);
+        } else {
+            result[attr] = value;
+        }
+    }
 
-              const ingredientsH3 = document.createElement("h3");
-              ingredientsH3.textContent = "Ingredients:";
+    content = content.reduce((a, c) => a.concat(Array.isArray(c) ? c : [c]), []);
 
-              const ingredientsUlEl = document.createElement("ul");
-              ingredientsDiv.appendChild(ingredientsH3);
-
-              info.ingredients.forEach((ingredient) => {
-                const newLi = document.createElement("li");
-                newLi.textContent = ingredient;
-
-                ingredientsUlEl.appendChild(newLi);
-              });
-
-              ingredientsDiv.appendChild(ingredientsUlEl);
-              bandDiv.appendChild(ingredientsDiv);
-
-              const descriptionDiv = document.createElement("div");
-              descriptionDiv.classList.add("description");
-
-              const descriptionH3 = document.createElement("h3");
-              descriptionH3.textContent = "Preparation:";
-
-              descriptionDiv.appendChild(descriptionH3);
-
-              info.steps.forEach((step) => {
-                const newP = document.createElement("p");
-                newP.textContent = step;
-                descriptionDiv.appendChild(newP);
-              });
-
-              mainArticle.appendChild(bandDiv);
-              mainArticle.appendChild(descriptionDiv);
-
-              mainBlock.appendChild(mainArticle);
-            });
-          
-        });
-        // Attach the article to the main block
-        mainBlock.appendChild(previewArticle);
-      });
-    })
-    .catch((err) => {
-      console.log(err);
+    content.forEach(e => {
+        if (typeof e == 'string' || typeof e == 'number') {
+            const node = document.createTextNode(e);
+            result.appendChild(node);
+        } else {
+            result.appendChild(e);
+        }
     });
+
+    return result;
 }
