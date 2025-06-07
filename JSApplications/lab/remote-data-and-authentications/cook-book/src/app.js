@@ -8,7 +8,6 @@ async function getRecipes() {
 async function getRecipeById(id) {
     const response = await fetch('http://localhost:3030/jsonstore/cookbook/details/' + id);
     const recipe = await response.json();
-
     return recipe;
 }
 
