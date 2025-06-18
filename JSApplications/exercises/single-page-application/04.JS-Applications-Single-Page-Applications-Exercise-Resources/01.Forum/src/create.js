@@ -1,5 +1,4 @@
-export function createTopic() {
-  const url = "http://localhost:3030/jsonstore/collections/myboard/posts";
+export function createTopic(url) {
   const createForm = document.querySelector("main form");
 
   const cancelButton = createForm.querySelector(".cancel");
@@ -24,6 +23,10 @@ export function createTopic() {
     const formData = new FormData(e.currentTarget);
 
     const formInputs = Object.fromEntries(formData);
+    const timestamp = new Date();
+    // const timestamp = currentTime.getDate();
+
+    formInputs.createdAt = timestamp;
 
     for (const value of Object.values(formInputs)) {
       if (!value) {
@@ -31,13 +34,17 @@ export function createTopic() {
       }
     }
 
-    await fetch(url, {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formInputs),
     });
+
+    const data = await response.json();
+
+    console.log(data);
 
     clearFromFields(e);
   }
