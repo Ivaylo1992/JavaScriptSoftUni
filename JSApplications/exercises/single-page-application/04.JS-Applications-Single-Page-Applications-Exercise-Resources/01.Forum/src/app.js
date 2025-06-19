@@ -1,3 +1,9 @@
-import { createTopic } from "./create.js";
+import { handleCreate } from "./createTopic.js";
 
-createTopic();
+const postsUrl = "http://localhost:3030/jsonstore/collections/myboard/posts";
+const createForm = document.querySelector("main form");
+
+createForm.addEventListener(
+  "submit",
+  handleCreate.bind(null, postsUrl, createForm)
+);
