@@ -1,21 +1,24 @@
+import { renderTopicDetails } from "./topicDetails.js";
+
 const topicContainerEl = document.querySelector(".topic-container");
 const postsUrl = "http://localhost:3030/jsonstore/collections/myboard/posts";
 
 export async function loadTopics() {
-  const response = await fetch(postsUrl);
-  const data = await response.json();
+  try {
+    const response = await fetch(postsUrl);
+    const data = await response.json();
 
-  const topics = Object.values(data);
+    const topics = Object.values(data);
 
-  for (const topic of topics) {
-    const { postText, topicName, username, _id, createdAt } = topic;
+    for (const topic of topics) {
+      const { postText, topicName, username, _id, createdAt } = topic;
 
-    // Check if topic already exists
-    if (!document.querySelector(`a[data-id="${_id}"]`)) {
-      const topicWrapper = document.createElement("div");
-      topicWrapper.classList.add("topic-name-wrapper");
+      // Check if topic already exists
+      if (!document.querySelector(`a[data-id="${_id}"]`)) {
+        const topicWrapper = document.createElement("div");
+        topicWrapper.classList.add("topic-name-wrapper");
 
-      topicWrapper.innerHTML = `
+        topicWrapper.innerHTML = `
         <div class="topic-name">
           <a href="#" class="normal" data-id="${_id}">
             <h2>${topicName}</h2>
@@ -30,8 +33,24 @@ export async function loadTopics() {
           </div>
         </div>
       `;
-      topicContainerEl.appendChild(topicWrapper);
+        topicContainerEl.appendChild(topicWrapper);
+
+        const aTag = topicWrapper.querySelector("a");
+        aTag.addEventListener(
+          "click",
+          renderTopicDetails.bind(
+            null,
+            postText,
+            topicName,
+            username,
+            _id,
+            createdAt
+          )
+        );
+      }
     }
+  } catch (err) {
+    console.log(err);
   }
 }
 

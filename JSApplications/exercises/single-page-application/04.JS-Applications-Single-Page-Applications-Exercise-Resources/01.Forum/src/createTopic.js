@@ -21,7 +21,6 @@ export async function handleCreate(url, createForm, e) {
 
   const formInputs = Object.fromEntries(formData);
   const timestamp = new Date();
-  // const timestamp = currentTime.getDate();
 
   formInputs.createdAt = timestamp;
 
@@ -31,13 +30,17 @@ export async function handleCreate(url, createForm, e) {
     }
   }
 
-  await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formInputs),
-  });
+  try {
+    await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formInputs),
+    });
+  } catch (err) {
+    console.log(err);
+  }
 
   loadTopics();
 
