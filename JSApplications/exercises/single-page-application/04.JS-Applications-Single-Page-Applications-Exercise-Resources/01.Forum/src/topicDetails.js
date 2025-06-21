@@ -1,4 +1,5 @@
 import { createComment } from "./createComment.js";
+import { renderComments } from "./renderComments.js";
 
 const container = document.querySelector("div[class=container]");
 
@@ -60,19 +61,9 @@ export function renderTopicDetails(
 
   commentDivEl.appendChild(postHeaderEL);
 
-  renderComments(commentDivEl);
-
   const commentForm = themeContent.querySelector("form");
 
-  commentForm.addEventListener("submit", createComment);
-}
+  commentForm.addEventListener("submit", createComment.bind(null, id));
 
-async function renderComments(comentsDiv) {
-  const url = "http://localhost:3030/jsonstore/collections/myboard/comments";
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-  } catch (error) {
-    console.log(error);
-  }
+  renderComments(id);
 }
