@@ -18,6 +18,7 @@ export function spinner() {
 
 export function updateNav() {
   const user = JSON.parse(localStorage.getItem("user"));
+
   const messageContainer = document.querySelector("#welcome-msg");
 
   if (user) {
@@ -29,6 +30,7 @@ export function updateNav() {
       .forEach((e) => (e.style.display = "none"));
     messageContainer.textContent = `Welcome, ${user.email}`;
   } else {
+    document.querySelector("button").style.display = "none";
     document
       .querySelectorAll(".user")
       .forEach((e) => (e.style.display = "none"));

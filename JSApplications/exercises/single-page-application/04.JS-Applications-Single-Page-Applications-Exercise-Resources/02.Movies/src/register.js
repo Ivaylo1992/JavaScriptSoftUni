@@ -34,7 +34,7 @@ async function onSubmit(e) {
     return;
   }
 
-  register(email, password);
+  await register(email, password);
   form.reset();
   updateNav();
   homePage();
@@ -54,7 +54,7 @@ async function register(email, password) {
       throw new Error(error.message);
     }
 
-    let userData = response.json();
+    let userData = await response.json();
 
     localStorage.setItem("user", JSON.stringify(userData));
   } catch (error) {

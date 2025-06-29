@@ -9,7 +9,7 @@ export function loginPage() {
   form.addEventListener("submit", onSubmit);
 }
 
-function onSubmit(e) {
+async function onSubmit(e) {
   e.preventDefault();
 
   const formData = new FormData(form);
@@ -17,7 +17,7 @@ function onSubmit(e) {
   const email = formData.get("email");
   const password = formData.get("password");
 
-  login(email, password);
+  await login(email, password);
   form.reset();
   updateNav();
   homePage();
