@@ -1,3 +1,4 @@
+import { createPage } from "./create.js";
 import { homePage } from "./home.js";
 import { loginPage } from "./login.js";
 import { registerPage } from "./register.js";
@@ -8,6 +9,7 @@ const routes = {
   "/register": registerPage,
   "/login": loginPage,
   "/logout": logOut,
+  "/create": createPage,
 };
 
 document.querySelector("nav").addEventListener("click", onNavigate);

@@ -30,7 +30,7 @@ export function updateNav() {
       .forEach((e) => (e.style.display = "none"));
     messageContainer.textContent = `Welcome, ${user.email}`;
   } else {
-    document.querySelector("button").style.display = "none";
+    document.querySelector("#add-movie-button").style.display = "none";
     document
       .querySelectorAll(".user")
       .forEach((e) => (e.style.display = "none"));
