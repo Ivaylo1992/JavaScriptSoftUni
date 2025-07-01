@@ -34,6 +34,8 @@ async function login(email, password) {
 
     if (!response.ok) {
       const error = response.json();
+      console.log(error);
+
       throw new Error(error.message);
     }
 

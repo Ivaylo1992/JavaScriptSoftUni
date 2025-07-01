@@ -1,3 +1,4 @@
+import { detailsPage } from "./details.js";
 import { showView, spinner } from "./utils.js";
 
 const section = document.querySelector("#home-page");
@@ -6,12 +7,13 @@ const catalogue = document.querySelector(
   "#movie .card-deck.d-flex.justify-content-center"
 );
 
-// catalogue.addEventListener("click", (e) => {
-//   if (e.target.tagName === "BUTTON") {
-//     e.preventDefault();
-//     const id = e.dataset.id;
-//   }
-// });
+catalogue.addEventListener("click", (e) => {
+  if (e.target.tagName === "BUTTON") {
+    e.preventDefault();
+    const id = e.target.dataset.id;
+    detailsPage(id);
+  }
+});
 
 export function homePage() {
   showView(section);
