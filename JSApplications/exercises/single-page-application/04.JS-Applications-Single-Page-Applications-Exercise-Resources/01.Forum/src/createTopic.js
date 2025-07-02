@@ -1,48 +1,47 @@
-import { loadTopics } from "./renderTopics.js";
+const createTopicForm = document.querySelector("form");
+const cancelButton = createTopicForm.querySelector(".cancel");
 
-export async function handleCreate(url, createForm, e) {
-  const cancelButton = createForm.querySelector(".cancel");
-  cancelButton.addEventListener("click", clearFromFields);
+createTopicForm.addEventListener("submit", createTopic);
 
-  function clearFromFields(e) {
-    e.preventDefault();
-    const elements = createForm.querySelectorAll("*");
-
-    elements.forEach((element) => {
-      if (element.value) {
-        element.value = "";
-      }
-    });
-  }
-
+cancelButton.addEventListener("click", (e) => {
   e.preventDefault();
+  const inputs = createTopicForm.querySelectorAll('[type="text"]');
 
-  const formData = new FormData(e.currentTarget);
+  inputs.forEach((input) => {
+    input.value = "";
+  });
+});
 
-  const formInputs = Object.fromEntries(formData);
-  const timestamp = new Date();
+export async function createTopic(e) {
+  e.preventDefault();
+  const formData = new FormData(createTopicForm);
 
-  formInputs.createdAt = timestamp;
+  const title = formData.get("topicName");
+  const username = formData.get("username");
+  const content = formData.get("postText");
 
-  for (const value of Object.values(formInputs)) {
-    if (!value) {
-      return;
+  const url = `http://localhost:3030/jsonstore/collections/myboard/posts`;
+
+  if (title != "" && username != "" && content != "") {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, username, content }),
+      });
+
+      if (response.status != 200 && !response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+
+      const responseData = await response.json();
+
+      console.log(responseData);
+    } catch (error) {
+      alert(error.message);
     }
   }
-
-  try {
-    await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formInputs),
-    });
-  } catch (err) {
-    console.log(err);
-  }
-
-  loadTopics();
-
-  clearFromFields(e);
 }
