@@ -1,57 +1,47 @@
-import { renderTopicDetails } from "./topicDetails.js";
+const topicTitleContainer = document.querySelector(".topic-title");
 
-const topicContainerEl = document.querySelector(".topic-container");
-const postsUrl = "http://localhost:3030/jsonstore/collections/myboard/posts";
+export async function renderTopics() {
+  const url = "http://localhost:3030/jsonstore/collections/myboard/posts";
 
-export async function loadTopics() {
   try {
-    const response = await fetch(postsUrl);
-    const data = await response.json();
+    const response = await fetch(url);
 
-    const topics = Object.values(data);
-
-    for (const topic of topics) {
-      const { postText, topicName, username, _id, createdAt } = topic;
-
-      // Check if topic already exists
-      if (!document.querySelector(`a[data-id="${_id}"]`)) {
-        const topicWrapper = document.createElement("div");
-        topicWrapper.classList.add("topic-name-wrapper");
-
-        topicWrapper.innerHTML = `
-        <div class="topic-name">
-          <a href="#" class="normal" data-id="${_id}">
-            <h2>${topicName}</h2>
-          </a>
-          <div class="columns">
-            <div>
-              <p>Date: <time>${createdAt}</time></p>
-              <div class="nick-name">
-                <p>Username: <span>${username}</span></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-        topicContainerEl.appendChild(topicWrapper);
-
-        const aTag = topicWrapper.querySelector("a");
-        aTag.addEventListener(
-          "click",
-          renderTopicDetails.bind(
-            null,
-            postText,
-            topicName,
-            username,
-            _id,
-            createdAt
-          )
-        );
-      }
+    if (response.status != 200 && !response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
     }
-  } catch (err) {
-    console.log(err);
+    const data = await response.json();
+    console.log(data);
+
+    Object.entries(data).forEach((topic) => {
+      const { content, title, username, _id } = topic[1];
+
+      const topicContainer = document.createElement("div");
+      topicContainer.className = "topic-container";
+
+      topicContainer.innerHTML = `
+            <div class="topic-name-wrapper">
+                <div class="topic-name">
+                    <a href="#" class="normal" dataset.id="${_id}">
+                        <h2>${title}</h2>
+                    </a>
+                    <div class="columns">
+                        <div>
+                            <p>Date: <time>2024-10-10T12:08:28.451Z</time></p>
+                            <div class="nick-name">
+                                <p>Username: <span>${username}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+      topicTitleContainer.appendChild(topicContainer);
+
+      const ATagEl = document.querySelector("a");
+      ATagEl.addEventListener("click");
+    });
+  } catch (error) {
+    alert(error.message);
   }
 }
-
-loadTopics();
