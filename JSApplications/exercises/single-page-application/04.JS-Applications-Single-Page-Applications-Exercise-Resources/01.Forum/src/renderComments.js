@@ -1,37 +1,50 @@
-export async function renderComments(id) {
-  const commentsDiv = document.querySelector("div[class=comment]");
-  const url = "http://localhost:3030/jsonstore/collections/myboard/comments";
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
+export function renderCommentForm(container) {
+  const formDivEl = document.createElement("div");
+  formDivEl.className = "answer-comment";
 
-    for (const { createdAt, postText, topicId, username, _id } of Object.values(
-      data
-    )) {
-      if (topicId === id && !document.querySelector(`div[data-id="${_id}"]`)) {
-        const userComment = document.createElement("div");
-        userComment.id = "user-comment";
-
-        userComment.innerHTML = `
-              <div class="topic-name-wrapper">
-                <div class="topic-name" data-id="${_id}">
-                  <p>
-                    <strong>${username}</strong> commented on
-                    <time>${createdAt}</time>
-                  </p>
-                  <div class="post-content">
-                    <p>
-                      ${postText}
-                    </p>
-                  </div>
+  formDivEl.innerHTML = `
+        <p><span>currentUser</span> comment:</p>
+        <div class="answer">
+            <form>
+                <textarea name="postText" id="comment" cols="30" rows="10"></textarea>
+                <div>
+                    <label for="username">Username <span class="red">*</span></label>
+                    <input type="text" name="username" id="username">
                 </div>
-              </div>
-            `;
+                <button>Post</button>
+            </form>
+        </div>
+    `;
 
-        commentsDiv.appendChild(userComment);
-      }
+  container.appendChild(formDivEl);
+}
+
+export async function addComment(e, postID) {
+  e.preventDefault();
+  const url = "http://localhost:3030/jsonstore/collections/myboard/comments";
+
+  const formData = new FormData(e.currentTarget);
+  //{postText: 'sad', username: 'Ivaylo1992'}
+
+  const text = formData.get("postText");
+  const username = formData.get("username");
+
+  if (!text || !username || !postID) {
+    return;
+  }
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text, username, postID }),
+    });
+
+    if (response.status != 200 && !response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
     }
   } catch (error) {
-    console.log(error);
+    alert(error.message);
   }
 }
