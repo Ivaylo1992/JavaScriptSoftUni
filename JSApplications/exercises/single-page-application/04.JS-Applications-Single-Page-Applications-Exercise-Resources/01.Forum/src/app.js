@@ -1,14 +1,17 @@
+import { getTopics } from "./load.js";
 import { getFormData } from "./create.js";
 
 const container = document.querySelector(".container");
 const main = document.querySelector("main");
 
-window.addEventListener("load", loadHome);
-document.querySelector("a").addEventListener("click", loadHome);
+window.addEventListener("load", showHome);
+document.querySelector("a").addEventListener("click", showHome);
 
-const form = container.querySelector("form");
+const form = document.querySelector("form");
 form.addEventListener("submit", getFormData);
 
-function loadHome() {
+function showHome() {
   container.replaceChildren(main);
+
+  getTopics();
 }

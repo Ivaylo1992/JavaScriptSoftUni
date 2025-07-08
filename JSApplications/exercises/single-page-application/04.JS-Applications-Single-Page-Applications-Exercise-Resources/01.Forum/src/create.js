@@ -1,18 +1,18 @@
+import { getTopics } from "./load.js";
+
 const form = document.querySelector("form");
 
 export function getFormData(e) {
   e.preventDefault();
 
-  const formData = new FormData(e.target);
-  const title = formData.get("topicName");
-  const username = formData.get("username");
-  const content = formData.get("postText");
+  const dataForm = new FormData(e.target);
+  const title = dataForm.get("topicName");
+  const username = dataForm.get("username");
+  const content = dataForm.get("postText");
 
   if (e.submitter.textContent === "Post") {
-    if (title != "" && username != "" && content != "") {
-      createTopic(title, username, content);
-    } else {
-      alert("All fields are required !!");
+    if (!title || !username || !content) {
+      alert("All fields are required!");
       return;
     }
     createTopic(title, username, content);
@@ -22,23 +22,25 @@ export function getFormData(e) {
 
 async function createTopic(title, username, content) {
   try {
-    const url = "http://localhost:3030/jsonstore/collections/myboard/posts";
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title,
-        username,
-        content,
-        date: new Date(),
-      }),
-    });
+    const response = await fetch(
+      "http://localhost:3030/jsonstore/collections/myboard/posts",
+      {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          title,
+          username,
+          content,
+          date: new Date(),
+        }),
+      }
+    );
 
     if (!response.ok) {
-      const err = await response.json();
-      throw new Error(err.message);
+      const data = await response.json();
+      throw new Error(data.message);
     }
-    // TODO: Render the topics
+    getTopics();
   } catch (error) {
     alert(error.message);
   }
