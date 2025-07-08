@@ -15,6 +15,7 @@ export function getFormData(e) {
       alert("All fields are required !!");
       return;
     }
+    createTopic(title, username, content);
   }
   form.reset();
 }
