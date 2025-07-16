@@ -21,13 +21,21 @@ describe("Test", async () => {
     await page.close();
   });
 
-  it("should show the extra div when button is clicked", async () => {
+  it("should show the extra div when more button is clicked", async () => {
     const isNotDivVisible = await page.isVisible(".extra");
     await page.click(`#${buttonID}`);
 
     const isDivVisible = await page.isVisible(".extra");
 
     assert.isTrue(isDivVisible);
+    assert.isFalse(isNotDivVisible);
+  });
+  it("should hide the extra div when less button is clicked", async () => {
+    await page.click(`#${buttonID}`);
+    await page.click(`#${buttonID}`);
+
+    const isNotDivVisible = await page.isVisible(".extra");
+
     assert.isFalse(isNotDivVisible);
   });
   it("should change the button text when clicked", async () => {
@@ -40,7 +48,7 @@ describe("Test", async () => {
     assert.equal(moreButtonText, "More");
     assert.equal(lessButtonText, "Less");
   });
-  it("should should expexted text in the p tag", async () => {
+  it("should show expexted text in the p tag", async () => {
     const expectedText = `Scalable Vector Graphics (SVG)`;
 
     await page.click(`#${buttonID}`);
