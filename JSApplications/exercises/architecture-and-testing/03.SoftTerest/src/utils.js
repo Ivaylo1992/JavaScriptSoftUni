@@ -12,3 +12,5 @@ export function showView(section) {
   hideAll();
   section.style.display = "block";
 }
+
+export function updateNav() {}
