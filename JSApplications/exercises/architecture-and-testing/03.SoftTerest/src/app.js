@@ -1,10 +1,12 @@
 import { homePage } from "./home.js";
+import { loginPage } from "./login.js";
 import { registerPage } from "./register.js";
 import { updateNav } from "./utils.js";
 
 const rautes = {
   "/": homePage,
   "/register": registerPage,
+  "/login": loginPage,
   "/logout": logout,
 };
 
