@@ -1,9 +1,11 @@
 import { homePage } from "./home.js";
 import { registerPage } from "./register.js";
+import { updateNav } from "./utils.js";
 
 const rautes = {
   "/": homePage,
   "/register": registerPage,
+  "/logout": logout,
 };
 
 const navBar = document.querySelector("nav");
@@ -23,4 +25,10 @@ function onNavigate(e) {
   }
 }
 
+function logout() {
+  localStorage.removeItem("user");
+  updateNav();
+}
+
 homePage();
+updateNav();

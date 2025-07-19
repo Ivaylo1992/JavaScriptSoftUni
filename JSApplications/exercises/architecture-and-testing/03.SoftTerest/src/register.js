@@ -1,4 +1,5 @@
-import { showView } from "./utils.js";
+import { homePage } from "./home.js";
+import { showView, updateNav } from "./utils.js";
 
 const section = document.querySelectorAll("div.container.home")[1];
 
@@ -9,8 +10,6 @@ const url = "http://localhost:3030/users/register";
 
 export async function registerPage() {
   showView(section);
-
-  console.log(form);
 }
 
 async function onSubmit(e) {
@@ -38,6 +37,9 @@ async function onSubmit(e) {
   }
 
   await register(email, password);
+  form.reset();
+  updateNav();
+  homePage();
 }
 
 async function register(email, password) {
@@ -50,12 +52,12 @@ async function register(email, password) {
       body: JSON.stringify({ email, password }),
     });
 
-    if (!response.status.ok) {
+    if (response.status !== 200 || !response.ok) {
       const err = await response.json();
       throw new Error(err.message);
     }
 
-    let userData = response.json();
+    let userData = await response.json();
 
     localStorage.setItem("user", JSON.stringify(userData));
   } catch (error) {
