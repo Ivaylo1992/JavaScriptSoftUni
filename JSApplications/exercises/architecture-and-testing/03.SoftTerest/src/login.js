@@ -4,12 +4,12 @@ import { showView, updateNav } from "./utils.js";
 const section = document.querySelectorAll("div.container.home")[2];
 
 const form = section.querySelector("form");
+form.addEventListener("submit", onSubmit);
 
 const url = "http://localhost:3030/users/login";
 
 export async function loginPage() {
   showView(section);
-  form.addEventListener("submit", onSubmit);
 }
 
 async function onSubmit(e) {
