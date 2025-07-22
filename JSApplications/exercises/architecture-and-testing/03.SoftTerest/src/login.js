@@ -2,6 +2,7 @@ import { homePage } from "./home.js";
 import { showView, updateNav } from "./utils.js";
 
 const section = document.querySelectorAll("div.container.home")[2];
+const registerForm = document.querySelector("form");
 
 const form = section.querySelector("form");
 form.addEventListener("submit", onSubmit);

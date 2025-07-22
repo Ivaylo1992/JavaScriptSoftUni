@@ -10,11 +10,11 @@ const url = "http://localhost:3030/users/register";
 
 export async function registerPage() {
   showView(section);
+  console.log(form);
 }
 
 async function onSubmit(e) {
   e.preventDefault();
-
   const formData = new FormData(form);
 
   const email = formData.get("email");

@@ -1,6 +1,7 @@
 import { homePage } from "./home.js";
 import { loginPage } from "./login.js";
 import { registerPage } from "./register.js";
+import { showIdeas } from "./showIdeas.js";
 import { updateNav } from "./utils.js";
 
 const rautes = {
@@ -8,6 +9,7 @@ const rautes = {
   "/register": registerPage,
   "/login": loginPage,
   "/logout": logout,
+  "/dash": showIdeas,
 };
 
 const navBar = document.querySelector("nav");
