@@ -44,21 +44,5 @@ function createIdeaCard(idea) {
         <a class="btn" data-id="${idea._id}" href="">Details</a>
   `;
 
-  const html = `
-        <div
-        class="card overflow-hidden current-card details"
-        style="width: 20rem; height: 18rem"
-        >
-        <div class="card-body">
-          <p class="card-text">Dinner Recipe</p>
-        </div>
-        <img
-          class="card-image"
-          src="./images/dinner.jpg"
-          alt="Card image cap"
-        />
-        <a class="btn" href="">Details</a>
-      </div>`;
-
   return cardDiv;
 }

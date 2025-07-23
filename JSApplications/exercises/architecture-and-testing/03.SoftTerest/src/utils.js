@@ -31,3 +31,4 @@ export function updateNav() {
     guestOptions.forEach((option) => (option.style.display = "block"));
   }
 }
+

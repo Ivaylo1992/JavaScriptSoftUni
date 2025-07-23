@@ -1,16 +1,18 @@
+import { createForm } from "./dom.js";
 import { homePage } from "./home.js";
 import { showView, updateNav } from "./utils.js";
 
-const section = document.querySelectorAll("div.container.home")[2];
-const registerForm = document.querySelector("form");
-
-const form = section.querySelector("form");
-form.addEventListener("submit", onSubmit);
+const section = document.querySelectorAll("div.container.home")[1];
+let form;
 
 const url = "http://localhost:3030/users/login";
 
 export async function loginPage() {
   showView(section);
+  createForm(section, "login");
+
+  form = section.querySelector("form");
+  form.addEventListener("submit", onSubmit);
 }
 
 async function onSubmit(e) {

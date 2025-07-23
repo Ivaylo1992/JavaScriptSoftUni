@@ -169,7 +169,6 @@ describe("E2E tests", function () {
         page.waitForResponse(endpoint),
         page.click('[type="submit"]', { timeout: interval }),
       ]);
-      log;
       const postData = JSON.parse(response.request().postData());
 
       expect(postData.email).to.equal(email);
